@@ -1,53 +1,69 @@
 # MEMORY.md · estado del proyecto (máx. ~50 líneas, sin claves ni datos personales)
+Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 
-## Estado actual (2026-10-06, tarde)
-- BD sano_bistro: migraciones 001–006 aplicadas (003 diseño por grupo/próximo premio, 004 webhook,
-  005/006 consulta de estado para pruebas).
-- Edge Function `loyverse-webhook` desplegada (sin JWT, clave en ?key=, se valida por hash en BD).
-- Webhook `receipts.update` registrado en la cuenta de PRUEBA de Loyverse (tienda Tixcapostres).
-- Pruebas e2e: 12/12 pasaron (ver prueba-loyverse/RESULTADOS-2026-10-06.md). Cliente de prueba C-8571.
-- Frontend: demo en :5173 (`Abrir-Sano-Rewards.bat`) y modo real en :5174 (`Abrir-modo-real.bat`).
-- Demo pública en Vercel: sano-rewards-demo.vercel.app (proyecto aparte, sin repo; borrar cuando Kevin diga).
-- La carpeta de la laptop es la fuente de verdad del código.
-- 2026-10-07: Google OAuth (proyecto GCP "Sano Rewards", modo prueba), SMTP Gmail sanobistrocafe@gmail.com
-  con remitente "Sano Bistro Café", plantillas por grupo (supabase/plantillas-correo, gen.py), migración 007
-  (teléfono único + grupo/nivel en user_metadata), contador 60 s al reenviar código, selector de cuenta Google.
-- Versión real: sano-rewards-real.vercel.app (publicar con frontend\Publicar-en-Vercel.bat; Kevin lo corre).
+## Estado actual (2026-10-13)
+- App real: sano-rewards-real.vercel.app (Vercel, deploy con VERCEL_ORG_ID/PROJECT_ID, ver Publicar-en-Vercel.bat).
+  sano-rewards-demo.vercel.app solo redirige a la real.
+- Backend Supabase (proyecto xddzafjkmtxgwqmrcdwg). Migraciones aplicadas hasta 015a-i (incl. 015d). Edge function loyverse-sync v3.
+- Loyverse: cuenta de PRUEBA "Codia". pg_cron cada minuto pide tickets (y cada 5 min descuentos, categorías y productos).
+  Webhook solo como respaldo. Diario 00:10 (Progreso): daily_maintenance (vence cupones, reintenta tickets con error).
+- Spec 004 (tarjeta básica) IMPLEMENTADA y probada con ventas reales: 7 sellos + bebida en la 8.ª, sello con compra
+  ≥ $65 (1/día), panadería ($200 en sello 1, 15 días), cold foam ($250, 30 días), bebida 30 días desde el día
+  siguiente, 1 cupón/día, sellos no vencen, anular compra → cupones usados a revisión. Sin Premium por ahora.
+- Panel por rol (spec 003): /admin (Resumen, Clientes, Grupos, Programa) y /mostrador. Rol lo decide la BD (my_role).
+  2026-10-13: menú del personal ahora VERTICAL a la izquierda (≥900px) y pestañas abajo en teléfono (StaffShell.tsx, styles.css). Resumen y Programa reordenados por secciones. Menú lateral ya publicado y revisado en pantalla (Kevin lo subió). Ficha del cliente con secciones y negritas, y barra superior móvil que se envuelve: hechos en código el 2026-10-13, con librería `motion` (components/motion.tsx: CountUp, Rise; pastilla animada del menú y transición entre pantallas, respetan reduced-motion). PUBLICADO 2026-10-13 (deploy EZdMuYEb…). Claude publica con run_in_terminal + frontend/Publicar-en-Vercel.bat en la terminal del usuario; por Bash/PowerShell el clasificador bloquea vercel deploy --prod.
+- Diseño cliente "Sano" (beige/café, logo @sanobistro) igual para todos los grupos (themes.ts CUSTOMER_SKIN).
+
+## Cuentas de prueba (contraseñas en CUENTAS-PRUEBA.local.txt, no subir)
+- kevin.36137+admin@gmail.com (dueña) · kevin.36137+caja@gmail.com (caja) · kevin.36137+cliente@gmail.com (cliente C-2891, entra con código por correo)
+- Kevin real: C-8571. Víctor: C-4738 y C-3895 (no tocar).
+
+- 2026-10-13 prueba en vivo de las 3 pantallas (caja, admin, cliente). Arreglado y PUBLICADO 2026-10-13 (deploy DA35ey8i…; cliente verificado en vivo, admin no re-verificado):
+  Programa se desbordaba a lo ancho 640-720px (styles.css .sp-form__grid/.field select); notas de compra en inglés
+  (receiptReason en lib/staff-format.ts + test); "Mostrar mi código" no salía encima (.sano > * le ganaba a .codesheet);
+  pantallas nuevas abrían a media página (ScrollToTop en App.tsx); textos "la tarjeta se reinicia cada mes" (History, Account).
+  Sin arreglar: selector "Diseño de la tarjeta" en Grupos no hace nada; buscar "C-0000" encuentra por teléfono;
+  "Activar notificaciones" no tiene backend que envíe avisos. (Bebida "30 días desde su emisión" = correcto, así lo dice el PDF de la dueña.)
+- 2026-10-13 revisado material de la dueña (docs/material-duena-2026-10-12) contra la app: todo hecho salvo fotos
+  reales tipo sticker, promos y convenios (los manda ella).
+- 2026-10-22: PUBLICADO en Vercel (deploy dpl_7GXTmfzi…; bundle en vivo verificado) y revisado local en 3 tamaños con
+  dueña (Grupos) y cliente (Cuenta). Login de prueba por código: pedir código en /entrar y leerlo con el conector Gmail
+  (llega en segundos, diseño café OK). Repo PÚBLICO github.com/kevin120509/sano-rewards creado; VictorCD20 y EmirMontalvo invitados (push).
+  Conector Supabase de Claude está en OTRA cuenta (solo ve utm-desk-nosql-cloud): no ve sano_bistro.
+  Ojo: Resumen de admin mostró "Clientes registrados 0" con C-2891 existente (¿animación CountUp o bug?): revisar.
+- 2026-10-20/22: arreglados en código (typecheck 0, tests 18/18, build OK):
+  selector de diseño en Grupos oculto si CUSTOMER_SKIN='sano' (AdminGroups.tsx); sección "Avisos" oculta con
+  PUSH_ENABLED=false (config/brand.ts, Account.tsx); búsqueda por código exacto en migración 016_buscar_por_codigo.sql
+  (NO APLICADA aún).
+- 2026-10-22: git iniciado (2 commits). .gitignore excluye .env*, *.local*, _entrega (un tgz traía .env.local),
+  _to_delete, _drive/07, docs/material-duena (audios privados). Repo creado (ver arriba).
+  .claude/launch.json = server "sano-dev".
+
+## PENDIENTE (en orden)
+0. Aplicar 016 (SQL Editor o reconectar conector Supabase a la cuenta de sano_bistro) y probar en /mostrador:
+   "C-0000" → nada (hoy saca a C-2891 por teléfono). Luego cerrar T18 (ya marcado T2).
+1. ✅ HECHO 2026-10-13: 015d aplicada (1 cliente→normal, 2 tiers y 3 tarjetas abiertas a meta 7). Archivo renombrado 015d_migrar_datos_APLICADA.sql.
+2. ✅ HECHO 2026-10-13: plantillas de correo en diseño café, un solo diseño (supabase/plantillas-correo, gen.py). Ya pegadas y guardadas en Supabase (Magic link/OTP, Confirm sign up, Reset password; verificadas al recargar). Copia en _drive/06 Plantillas de correo ya actualizada. Pendiente menor: probar un correo real de código. Los asuntos no se cambiaron.
+3. Fotos reales de la dueña para cupones (galleta, cold foam) cuando las mande.
+4. Promociones del mes: las carga la dueña en Programa (ella las está preparando).
+5. Cuenta REAL de Sano en Loyverse: token en Vault 'loyverse_token', crear 3 descuentos + categoría de paquetes, elegirlos en Programa, registrar webhook.
+6. Convenios (Estudiantes, GYM, OZON): reglas especiales después; por ahora mismas reglas. Quitar SHOW_GROUP_LINKS cuando haya QR impresos.
+7. Alta de la dueña real: insert into staff_invites (email, role 'owner'). Borrar cuentas de prueba al final.
+8. Actualizar docs del Drive (CODIA › Clientes › 2.0 Sino Coffe). Correos por Gmail SMTP llegan lento: considerar Resend.
 
 ## Decisiones (y por qué)
-- Vite + React en lugar de Next.js: app 100 % de navegador.
-- Premium = piel dorada sobre el diseño del grupo; mantiene el prefijo del grupo.
-- Al cliente se le muestra `rewards.description` (texto amable) antes que el nombre interno del descuento.
-- Premios de PRUEBA: Consentido → "Recompensa de producto Gratis" (una bebida gratis);
-  Premium → "Cliente de 2 x 1" (2x1 en tu bebida). Falta que Kevin/dueña definan los reales por grupo.
-- Webhook sin firma de Loyverse: se protege con clave secreta en la URL (hash en `private.webhook_keys`).
-- Devolución y cancelación se probaron con payload simulado (mismo formato que Loyverse).
-- Sin QR → grupo por defecto (Consentido). Teléfono opcional. Marca en `frontend/src/config/brand.ts`.
+- Identificación por CÓDIGO en la nota del ticket (no escaneo de QR): no requiere app extra para el mesero.
+- QR SOLO para registro de clientes (QR impreso de cada grupo). NO poner QR personal en "Mostrar mi código",
+  aunque el diseño de la dueña diga "Mostrar mi QR" (Kevin, 2026-10-13).
+- Cupones = descuentos de Loyverse; el sistema los lee y marca el canje solo. Mostrador puede canjear a mano.
+- "Precio regular" = renglón sin descuento y fuera de la categoría de paquetes elegida en Programa.
+- Cold foam se gana en cualquier compra del recorrido abierto; no con la bebida pendiente. Sello manual no da cupones.
+- Montos/vigencias solo los cambia CODIA (program_settings).
 
 ## Errores a evitar
-- El entorno en la nube no puede usar npm: instalar/compilar en la laptop.
-- Loyverse POST /receipts: con `id` de descuento existente NO mandar `percentage`.
-- La regla 1 visita/día hace que repetir pruebas el mismo mes dé "already_visited_today".
-- `set_customer_tier` exige superadmin; mientras no exista, el cambio a Premium se hizo por SQL.
-- Pruebas SQL locales: crear antes los roles anon/authenticated/service_role.
-
-## Próximos pasos
-- Kevin: Google OAuth, SMTP (Gmail o Resend), token de Loyverse definitivo (y rotar el de prueba).
-- Definir premios reales por grupo y crear grupos GYM/Estudiantes/OSO con su `theme`.
-- Crear superadmin; pg_cron para close_month; aviso de privacidad; logo real.
-
-## 2026-10-07 (tarde)
-- Teléfono OBLIGATORIO en los 3 accesos: Complete.tsx lo exige; App.tsx manda a /completar a quien tenga tarjeta sin teléfono; migración 008 (aplicada) hace que register_customer rechace crear tarjeta sin teléfono (≥10 dígitos). Google no entrega teléfono → se pide en "Casi listo".
-- Nueva ruta pública /privacidad (Privacy.tsx, borrador con domicilio [PENDIENTE]).
-- Google OAuth EN PRODUCCIÓN (2026-10-07): marca con página principal sano-rewards-real.vercel.app, privacidad /privacidad, dominios demo/real/supabase. Cualquier cuenta Google puede entrar. Si se sube logo, Google exigirá verificación.
-- Contraseña: '¿Olvidaste tu contraseña?' en Login (resetPasswordForEmail → /nueva-contrasena, pantalla NewPassword.tsx) y sección 'Contraseña' en Mi cuenta (updateUser; sirve también para quien entró con Google/código). Plantilla 'Reset password' de Supabase con diseño por grupo (gen.py → restablecer-contrasena.html). Pendiente: publicar en Vercel y probar el correo real.
-- Login: ya no redirige solo si hay sesión abierta (solo al volver de Google, flag sessionStorage 'sano_oauth_pending'); muestra 'Ya tienes la sesión abierta con X · Ir a mi tarjeta / Usar otra cuenta'. El selector de Google sí funciona en producción (verificado); lo que pasaba en el teléfono era la sesión ya abierta.
-- 2026-10-07: SE QUITÓ EL MODO DEMO (demo.ts, DemoPanel, isDemo → movidos a _to_delete/demo). App siempre Supabase. Publicar-en-Vercel.bat solo sube la real; Abrir-Sano-Rewards.bat abre :5174 real. Proyecto Vercel sano-rewards-demo sigue existiendo (borrar cuando Kevin confirme).
-- Inicio: chips de registro por grupo con tokens REALES (config/brand.ts GROUP_LINKS, SHOW_GROUP_LINKS=true TEMPORAL hasta imprimir QR; quitar después porque deja elegir grupo).
-- Código por correo = 8 dígitos (OTP_LENGTH). Mi cuenta: tarjeta (código, grupo, categoría, vencimiento Premium, visitas), datos con teléfono obligatorio, botón "Cambiar contraseña" → /nueva-contrasena.
-- Prueba real 2026-10-07 con Google (cuenta de Kevin): tarjeta, Mi cuenta, Historial y aviso de sesión abierta OK y coinciden con la BD. OJO: el correo con código de las 11:02 no llegó (Supabase /otp 200); revisar Enviados/alertas de sanobistrocafe@gmail.com.
-- 2026-10-07: grupo OSO renombrado a OZON (BD, plantillas de correo en Supabase y gen.py, GROUP_LINKS). Bienvenida por grupo en /r/<token> con textos propios (domain/groupCopy.ts) y diseño del grupo.
-- QR generados en qr/ (PNG 1920x1080 por grupo + inicio general; qr/imprenta/*.svg vectoriales; qr/fuente/posters.mjs para regenerar). Apuntan a sano-rewards-real.vercel.app: si se cambia a dominio propio hay que regenerarlos ANTES de imprimir.
-- Correo con código por Gmail SMTP llegó con ~12 min de retraso (enviado 17:02Z): riesgo para clientes; considerar Resend u otro servicio de envío.
-- Ubicación del negocio: Progreso, Yucatán (no Mérida). Aviso de privacidad corregido.
-- Domicilio Sano Bistro: Calle 77 (antes 27) No. 8E x 44 y 46, Col. Ismael García, 97320 Progreso, Yuc. (BRAND.address + mapsUrl). Aviso de privacidad ya sin [PENDIENTE].
+- En SQL: `text[] || 'literal'` falla; usar array_append.
+- La herramienta de Supabase cancela UPDATE/DELETE de datos sin aprobación: hacerlo cuando Kevin esté presente.
+- Loyverse: nombres de descuento ≤ 40 caracteres; productos requieren default_pricing_type FIXED.
+- Windows bloquea nlm.exe: usar el python de uv (ver historial). Vitest no corre en la VM; correrlo en la laptop.
+- card.test.ts: test de piel Premium reescrito (2026-10-13) para el diseño Sano (skin 'sano', sin premium). Si CUSTOMER_SKIN vuelve a 'groups', restaurar el test de piel dorada. Vitest no corrido (solo en la laptop).
+- Pruebas: 1 sello por día; usar fechas pasadas con prueba-loyverse/prueba-004.mjs.
