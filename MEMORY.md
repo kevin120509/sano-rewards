@@ -30,7 +30,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
   dueña (Grupos) y cliente (Cuenta). Login de prueba por código: pedir código en /entrar y leerlo con el conector Gmail
   (llega en segundos, diseño café OK). Repo PÚBLICO github.com/kevin120509/sano-rewards creado; VictorCD20 y EmirMontalvo invitados (push).
   Conector Supabase de Claude está en OTRA cuenta (solo ve utm-desk-nosql-cloud): no ve sano_bistro.
-  Ojo: Resumen de admin mostró "Clientes registrados 0" con C-2891 existente : casi seguro es CountUp (empieza en 0 hasta que useInView lo ve; el panel estaba oculto). Confirmar a ojo.
+  Ojo: Resumen de admin mostró "Clientes registrados 0" con C-2891 existente : era CountUp (esperaba a useInView y en pestaña oculta se quedaba en 0; real = 4). Arreglado 2026-10-22 en motion.tsx (anima al cargar + temporizador 900 ms fija el valor). Falta publicar.
 - 2026-10-20/22: arreglados en código (typecheck 0, tests 18/18, build OK):
   selector de diseño en Grupos oculto si CUSTOMER_SKIN='sano' (AdminGroups.tsx); sección "Avisos" oculta con
   PUSH_ENABLED=false (config/brand.ts, Account.tsx); búsqueda por código exacto en migración 016_buscar_por_codigo.sql

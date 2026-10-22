@@ -1,19 +1,19 @@
-import { animate, motion, useInView, useReducedMotion } from 'motion/react';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { animate, motion, useReducedMotion } from 'motion/react';
+import { useEffect, useState, type ReactNode } from 'react';
 
-/** Número que sube hasta su valor al aparecer. Sin movimiento si el usuario pidió menos animación. */
+/** Número que sube hasta su valor al cargar. Sin movimiento si el usuario pidió menos animación.
+ *  Siempre termina en el valor real: si la pestaña está oculta (el navegador pausa la animación),
+ *  un temporizador lo fija igual, para que nunca se quede mostrando 0. */
 export function CountUp({ value, className }: { value: number; className?: string }) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-  const seen = useInView(ref, { once: true });
   const [n, setN] = useState(reduce ? value : 0);
   useEffect(() => {
     if (reduce) { setN(value); return; }
-    if (!seen) return;
     const c = animate(0, value, { duration: 0.7, ease: 'easeOut', onUpdate: (v) => setN(Math.round(v)) });
-    return () => c.stop();
-  }, [value, seen, reduce]);
-  return <b ref={ref} className={className}>{n}</b>;
+    const t = setTimeout(() => { c.stop(); setN(value); }, 900);
+    return () => { c.stop(); clearTimeout(t); };
+  }, [value, reduce]);
+  return <b className={className}>{n}</b>;
 }
 
 /** Entrada suave (sube y aparece). `delay` escalona tarjetas hermanas. */
