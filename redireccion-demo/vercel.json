@@ -1,0 +1,24 @@
+{
+  "framework": null,
+  "installCommand": "echo sin-instalar",
+  "buildCommand": "echo listo",
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/((?!sw\\.js$).*)",
+      "destination": "https://sano-rewards-real.vercel.app/$1",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}

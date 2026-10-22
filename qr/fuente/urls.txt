@@ -1,0 +1,5 @@
+Inicio-General|https://sano-rewards-real.vercel.app/
+Registro-Cliente-Consentido|https://sano-rewards-real.vercel.app/r/36e375ac5e8b41248fec2fb8381aadf4
+Registro-Estudiantes|https://sano-rewards-real.vercel.app/r/e101657ba8666bc38cfc0eecfe4b4999
+Registro-GYM|https://sano-rewards-real.vercel.app/r/ffd5fe7003e90508ac02b7af0b51febf
+Registro-OZON|https://sano-rewards-real.vercel.app/r/a3ca72c546d60589eb71472ee63fdd4a

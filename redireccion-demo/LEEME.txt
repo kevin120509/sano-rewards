@@ -1,0 +1,3 @@
+Esta carpeta publica en el proyecto Vercel "sano-rewards-demo" una redirección a la app real.
+Así cualquier enlace o acceso directo viejo a sano-rewards-demo.vercel.app abre sano-rewards-real.vercel.app.
+Para publicar: abrir una terminal aquí y correr  vercel deploy --prod --yes

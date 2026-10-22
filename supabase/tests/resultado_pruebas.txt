@@ -1,0 +1,48 @@
+T01 perfiles automáticos: 3
+T02 grupo por QR: GYM FitZone G
+T03 anon ve tabla groups: 0
+T04 registro Ana (sin grupo) ok: true
+T05 registrar dos veces devuelve la misma: true
+T06 registro Luis (GYM) ok: true
+T07 Luis ve clientes (RLS, solo él): 1
+T08 Luis ve grupos (no es staff): 0
+T09 my_card Luis: G-2275 grupo GYM FitZone 0/8
+T10 visitas Luis: visit,visit,visit,visit,visit,visit,visit,visit
+T11 tarjeta completa: reward_ready 8/8 seq1 | open 0/8 seq2
+T12 recompensa asignada: GYM - 30%
+T13 mismo día otra vez: already_visited_today
+T14 aviso duplicado: processed
+T15 prefijo equivocado: no_customer_code
+T16 sin código: no_customer_code
+T17 canje con descuento GYM: visit
+T18 tarjetas después del canje: redeemed 8/8 | open 1/8
+T19 devolución: refund
+T20 visita anulada y contador: 1 / abierta 0
+T21 visitas Ana: visit,visit,visit,visit,visit,visit,visit,visit
+T22 antes de cancelar: reward_ready 8 | open 0
+T23 cancelación: cancelled
+T24 después de cancelar: open 7/8
+T25 superadmin ve todos los clientes: 2
+T26 Ana premium: premium vence 2026-11-01 00:00
+T27 tarjetas Ana: reward_ready 7/7 | open 0/4
+T28 auditoría: 1
+psql:/tmp/test.sql:95: NOTICE:  T29 cliente no puede hacerse premium: OK
+T30 venta de septiembre: closed_period
+T31 tarjeta de septiembre vencida: expired
+T32 premium vencido regresa a: consentido
+T33 estadísticas de sep: 4 grupos
+T34 cierre idempotente: 1
+T35 recordatorios (30 días): 1
+T36 my_card Ana: C-3888 nivel Cliente Consentido premios listos 1 (PREMIUM - Postre)
+psql:/tmp/test.sql:119: NOTICE:  T39 cliente no puede crear visitas: OK
+psql:/tmp/test.sql:125: NOTICE:  T40 cliente no puede cambiar su nivel: OK
+T37 errores en ventas: 0
+T38 estados de ventas: already_visited_today=1, cancelled=1, closed_period=1, no_customer_code=2, refund=1, visit=15, visit_and_redeem=1
+Nested Loop
+  Join Filter: (g.id = c.group_id)
+  ->  Index Scan using customers_code_number_key on customers c
+        Index Cond: (code_number = 1234)
+  ->  Index Scan using groups_prefix_key on groups g
+        Index Cond: ((prefix)::text = 'G'::text)
+Index Scan using cards_one_open on loyalty_cards
+  Index Cond: (customer_id = '00000000-0000-0000-0000-000000000000'::uuid)

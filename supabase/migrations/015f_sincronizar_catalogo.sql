@@ -1,0 +1,2 @@
+-- 015f · Catálogo de Loyverse (categorías y productos) para reconocer paquetes/promos. Aplicada 2026-10-13.
+-- Ver definición en la base: public.loyverse_sync_catalog(p_secret, p_categories, p_items).

@@ -1,0 +1,13 @@
+{
+  "name": "Sano Rewards · Cliente Consentido",
+  "short_name": "Sano Rewards",
+  "description": "Tu tarjeta de cliente de Sano Bistro Café",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF9EE",
+  "theme_color": "#2F7A22",
+  "lang": "es-MX",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

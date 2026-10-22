@@ -1,0 +1,42 @@
+{
+ "A": {
+  "fecha": "2026-10-06T22:51:35.254Z",
+  "filas": [
+   {
+    "paso": "A5",
+    "caso": "Descuento de premio SIN tener premio (día 3) → alerta",
+    "resultado": "FALLÓ",
+    "obtenido": "processed/visit · visitas 2/8 · listos 0 · canjeados 0"
+   }
+  ]
+ },
+ "B": {
+  "fecha": "2026-10-06T22:52:33.359Z",
+  "filas": [
+   {
+    "paso": "B1",
+    "caso": "Premium: visita (día 4)",
+    "resultado": "PASÓ",
+    "obtenido": "processed/visit · visitas 3/4 · listos 0 · canjeados 0"
+   },
+   {
+    "paso": "B2",
+    "caso": "Premium: visita 4 de 4 → premio listo (día 5)",
+    "resultado": "PASÓ",
+    "obtenido": "processed/visit · visitas 0/4 · listos 1 · canjeados 0"
+   },
+   {
+    "paso": "B3",
+    "caso": "Canje con el descuento 2x1 (día 6) → canjeado y cuenta visita",
+    "resultado": "PASÓ",
+    "obtenido": "processed/visit_and_redeem · visitas 1/4 · listos 0 · canjeados 1"
+   },
+   {
+    "paso": "B4",
+    "caso": "Se cancela la venta del canje (simulada) → premio vuelve a estar listo",
+    "resultado": "PASÓ",
+    "obtenido": "processed/cancelled · visitas 0/4 · listos 1 · canjeados 0"
+   }
+  ]
+ }
+}
