@@ -22,7 +22,7 @@
 
 ## Revisión
 - [x] T17 Prueba real en Loyverse Codia: crear los 3 descuentos y la categoría Promociones, ventas de $64/$65/$200/$250 y canjes. Hecho cuando: cada RF pasa.
-- [ ] T18 Revisión en Chrome (cliente, caja, dueña, teléfono) y publicar en Vercel. Actualizar MEMORY, AGENTS y Drive. (2026-10-22: dueña y cliente revisados en 3 tamaños y publicado; falta Drive y aplicar 016.)
+- [x] T18 Revisión en Chrome (cliente, caja, dueña, teléfono) y publicar en Vercel. Actualizar MEMORY, AGENTS y Drive. (HECHO 2026-10-22: revisado en 3 tamaños, publicado y 016 aplicada. Drive: subir bitácora a mano, sin permiso de escritura.)
 
 ## Estado 2026-10-13
 - Hecho y probado en real (Loyverse Codia, cliente de prueba C-2891 = kevin.36137+cliente@gmail.com): $64 sin sello; $250 → sello 1 + panadería + cold foam; panadería canjeada en el mismo ticket; paquete $220 da sello con regular $0; 7.º sello → bebida desde el día siguiente (mismo día: not_yet); compra con bebida pendiente no suma; canje de bebida + $65 → recorrido nuevo con sello 1; 2.º cupón el mismo día → daily_limit; cold foam al día siguiente → canjeado; anular ticket desde el panel → cupones usados a revisión.

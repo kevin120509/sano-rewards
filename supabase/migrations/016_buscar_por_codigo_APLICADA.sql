@@ -1,5 +1,5 @@
 -- 016 · Buscar por código exacto en el mostrador
--- ESTADO: NO APLICADA. Kevin debe aprobarla antes de correrla en Supabase.
+-- ESTADO: APLICADA 2026-10-22 (SQL Editor) y probada en vivo como caja.
 --
 -- Qué arregla: al escribir un código como "C-0000", staff_search_customers quitaba lo que no es
 -- dígito ("0000") y buscaba teléfonos que contuvieran "0000", mostrando clientes con otro código.

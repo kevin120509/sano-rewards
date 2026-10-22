@@ -4,7 +4,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 ## Estado actual (2026-10-13)
 - App real: sano-rewards-real.vercel.app (Vercel, deploy con VERCEL_ORG_ID/PROJECT_ID, ver Publicar-en-Vercel.bat).
   sano-rewards-demo.vercel.app solo redirige a la real.
-- Backend Supabase (proyecto xddzafjkmtxgwqmrcdwg). Migraciones aplicadas hasta 015a-i (incl. 015d). Edge function loyverse-sync v3.
+- Backend Supabase (proyecto xddzafjkmtxgwqmrcdwg). Migraciones aplicadas hasta 016 (016 aplicada 2026-10-22 por SQL Editor desde el Chrome de Kevin). Edge function loyverse-sync v3.
 - Loyverse: cuenta de PRUEBA "Codia". pg_cron cada minuto pide tickets (y cada 5 min descuentos, categorías y productos).
   Webhook solo como respaldo. Diario 00:10 (Progreso): daily_maintenance (vence cupones, reintenta tickets con error).
 - Spec 004 (tarjeta básica) IMPLEMENTADA y probada con ventas reales: 7 sellos + bebida en la 8.ª, sello con compra
@@ -30,18 +30,17 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
   dueña (Grupos) y cliente (Cuenta). Login de prueba por código: pedir código en /entrar y leerlo con el conector Gmail
   (llega en segundos, diseño café OK). Repo PÚBLICO github.com/kevin120509/sano-rewards creado; VictorCD20 y EmirMontalvo invitados (push).
   Conector Supabase de Claude está en OTRA cuenta (solo ve utm-desk-nosql-cloud): no ve sano_bistro.
-  Ojo: Resumen de admin mostró "Clientes registrados 0" con C-2891 existente : era CountUp (esperaba a useInView y en pestaña oculta se quedaba en 0; real = 4). Arreglado 2026-10-22 en motion.tsx (anima al cargar + temporizador 900 ms fija el valor). Falta publicar.
+  Ojo: Resumen de admin mostró "Clientes registrados 0" con C-2891 existente : era CountUp (esperaba a useInView y en pestaña oculta se quedaba en 0; real = 4). Arreglado 2026-10-22 en motion.tsx (anima al cargar + temporizador 900 ms fija el valor). PUBLICADO y verificado en vivo (muestra 4).
 - 2026-10-20/22: arreglados en código (typecheck 0, tests 18/18, build OK):
   selector de diseño en Grupos oculto si CUSTOMER_SKIN='sano' (AdminGroups.tsx); sección "Avisos" oculta con
-  PUSH_ENABLED=false (config/brand.ts, Account.tsx); búsqueda por código exacto en migración 016_buscar_por_codigo.sql
-  (NO APLICADA aún).
+  PUSH_ENABLED=false (config/brand.ts, Account.tsx); búsqueda por código exacto en migración 016_buscar_por_codigo_APLICADA.sql
+  (aplicada 2026-10-22).
 - 2026-10-22: git iniciado (2 commits). .gitignore excluye .env*, *.local*, _entrega (un tgz traía .env.local),
   _to_delete, _drive/07, docs/material-duena (audios privados). Repo creado (ver arriba).
   .claude/launch.json = server "sano-dev".
 
 ## PENDIENTE (en orden)
-0. Aplicar 016 (SQL Editor o reconectar conector Supabase a la cuenta de sano_bistro) y probar en /mostrador:
-   "C-0000" → nada (hoy saca a C-2891 por teléfono). Luego cerrar T18 (ya marcado T2).
+0. ✅ HECHO 2026-10-22: 016 aplicada y probada en vivo como caja (C-0000 y ZZ-1234 → nadie; c2891 y "Paula" → C-2891). T2 y T18 cerradas.
 1. ✅ HECHO 2026-10-13: 015d aplicada (1 cliente→normal, 2 tiers y 3 tarjetas abiertas a meta 7). Archivo renombrado 015d_migrar_datos_APLICADA.sql.
 2. ✅ HECHO 2026-10-13: plantillas de correo en diseño café, un solo diseño (supabase/plantillas-correo, gen.py). Ya pegadas y guardadas en Supabase (Magic link/OTP, Confirm sign up, Reset password; verificadas al recargar). Copia en _drive/06 Plantillas de correo ya actualizada. Correo real de código probado 2026-10-22 (llega en segundos). Los asuntos no se cambiaron.
 3. Fotos reales de la dueña para cupones (galleta, cold foam) cuando las mande.
@@ -67,3 +66,5 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 - Windows bloquea nlm.exe: usar el python de uv (ver historial). Vitest no corre en la VM; correrlo en la laptop.
 - card.test.ts: test de piel Premium reescrito (2026-10-13) para el diseño Sano (skin 'sano', sin premium). Si CUSTOMER_SKIN vuelve a 'groups', restaurar el test de piel dorada. Vitest no corrido (solo en la laptop).
 - Pruebas: 1 sello por día; usar fechas pasadas con prueba-loyverse/prueba-004.mjs.
+- Migraciones: el conector Supabase de Claude es de otra cuenta y el clasificador bloquea aplicar/Run. Flujo que funciona: Claude pega el SQL en el SQL Editor del Chrome de Kevin (monaco setValue) y Kevin da Run; luego Claude prueba en vivo.
+- Navegador: usar el Chrome de Kevin (Claude in Chrome); ahí tiene sesión de Supabase. Login de prueba en la app: código por correo leído con el conector Gmail.
