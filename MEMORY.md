@@ -43,13 +43,13 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 0. Aplicar 016 (SQL Editor o reconectar conector Supabase a la cuenta de sano_bistro) y probar en /mostrador:
    "C-0000" → nada (hoy saca a C-2891 por teléfono). Luego cerrar T18 (ya marcado T2).
 1. ✅ HECHO 2026-10-13: 015d aplicada (1 cliente→normal, 2 tiers y 3 tarjetas abiertas a meta 7). Archivo renombrado 015d_migrar_datos_APLICADA.sql.
-2. ✅ HECHO 2026-10-13: plantillas de correo en diseño café, un solo diseño (supabase/plantillas-correo, gen.py). Ya pegadas y guardadas en Supabase (Magic link/OTP, Confirm sign up, Reset password; verificadas al recargar). Copia en _drive/06 Plantillas de correo ya actualizada. Pendiente menor: probar un correo real de código. Los asuntos no se cambiaron.
+2. ✅ HECHO 2026-10-13: plantillas de correo en diseño café, un solo diseño (supabase/plantillas-correo, gen.py). Ya pegadas y guardadas en Supabase (Magic link/OTP, Confirm sign up, Reset password; verificadas al recargar). Copia en _drive/06 Plantillas de correo ya actualizada. Correo real de código probado 2026-10-22 (llega en segundos). Los asuntos no se cambiaron.
 3. Fotos reales de la dueña para cupones (galleta, cold foam) cuando las mande.
 4. Promociones del mes: las carga la dueña en Programa (ella las está preparando).
 5. Cuenta REAL de Sano en Loyverse: token en Vault 'loyverse_token', crear 3 descuentos + categoría de paquetes, elegirlos en Programa, registrar webhook.
 6. Convenios (Estudiantes, GYM, OZON): reglas especiales después; por ahora mismas reglas. Quitar SHOW_GROUP_LINKS cuando haya QR impresos.
 7. Alta de la dueña real: insert into staff_invites (email, role 'owner'). Borrar cuentas de prueba al final.
-8. Actualizar docs del Drive (CODIA › Clientes › 2.0 Sino Coffe). Correos por Gmail SMTP llegan lento: considerar Resend.
+8. Drive (2.0 Sino Coffe › 05 Documentacion tecnica): Claude no tiene permiso de escribir (carpeta de Víctor); copia local al día en _drive/05, subirla a mano. Correos por Gmail SMTP llegan lento: considerar Resend.
 
 ## Decisiones (y por qué)
 - Identificación por CÓDIGO en la nota del ticket (no escaneo de QR): no requiere app extra para el mesero.
