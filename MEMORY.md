@@ -26,8 +26,17 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
   "Activar notificaciones" no tiene backend que envíe avisos. (Bebida "30 días desde su emisión" = correcto, así lo dice el PDF de la dueña.)
 - 2026-10-13 revisado material de la dueña (docs/material-duena-2026-10-12) contra la app: todo hecho salvo fotos
   reales tipo sticker, promos y convenios (los manda ella).
+- 2026-10-20/22: arreglados EN CÓDIGO (typecheck 0, tests 18/18, build OK; NO publicado, pantallas no revisadas en navegador):
+  selector de diseño en Grupos oculto si CUSTOMER_SKIN='sano' (AdminGroups.tsx); sección "Avisos" oculta con
+  PUSH_ENABLED=false (config/brand.ts, Account.tsx); búsqueda por código exacto en migración 016_buscar_por_codigo.sql
+  (NO APLICADA: el conector Supabase da "You do not have permission", ni lectura; aplicar en SQL Editor).
+- 2026-10-22: git iniciado (2 commits). .gitignore excluye .env*, *.local*, _entrega (un tgz traía .env.local),
+  _to_delete, _drive/07, docs/material-duena (audios privados). Repo PÚBLICO kevin120509/sano-rewards aún NO creado
+  (bloqueado desde Claude; Kevin corre gh repo create + invita VictorCD20 y EmirMontalvo). .claude/launch.json = server "sano-dev".
 
 ## PENDIENTE (en orden)
+0. Crear repo GitHub e invitar compañeros (comandos en el chat 2026-10-22). Aplicar 016 y probar búsqueda ("C-0000" → nada).
+   Revisar Grupos y Cuenta en 3 tamaños con cuenta de dueña, publicar en Vercel, cerrar T18 y marcar T2 en tasks.md.
 1. ✅ HECHO 2026-10-13: 015d aplicada (1 cliente→normal, 2 tiers y 3 tarjetas abiertas a meta 7). Archivo renombrado 015d_migrar_datos_APLICADA.sql.
 2. ✅ HECHO 2026-10-13: plantillas de correo en diseño café, un solo diseño (supabase/plantillas-correo, gen.py). Ya pegadas y guardadas en Supabase (Magic link/OTP, Confirm sign up, Reset password; verificadas al recargar). Copia en _drive/06 Plantillas de correo ya actualizada. Pendiente menor: probar un correo real de código. Los asuntos no se cambiaron.
 3. Fotos reales de la dueña para cupones (galleta, cold foam) cuando las mande.
