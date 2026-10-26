@@ -38,6 +38,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 - 2026-10-22: git iniciado (2 commits). .gitignore excluye .env*, *.local*, _entrega (un tgz traía .env.local),
   _to_delete, _drive/07, docs/material-duena (audios privados). Repo creado (ver arriba).
   .claude/launch.json = server "sano-dev".
+- 2026-10-26: PRUEBA COMPLETA en Loyverse "Codia" con C-2891 (tickets 0016-0019), leída sola en <1 min y verificada en la ficha: 4 → sin sello (mínimo 5); 50 → sello + cupón cold foam (vence 30 días después: 21 oct → 20 nov); 2.ª compra del mismo día → sin sello; cupón aplicado en Loyverse → canjeado solo + sello. Anulación ya probada el 2026-10-13 (tickets 0003/0015). C-2891 quedó en 4/7 sellos, sin cupones.
 
 ## PENDIENTE (en orden)
 0. ✅ HECHO 2026-10-22: 016 aplicada y probada en vivo como caja (C-0000 y ZZ-1234 → nadie; c2891 y "Paula" → C-2891). T2 y T18 cerradas.
