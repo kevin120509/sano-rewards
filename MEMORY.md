@@ -48,7 +48,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 4. Promociones del mes: las carga la dueña en Programa (ella las está preparando).
 5. Cuenta REAL de Sano en Loyverse: token en Vault 'loyverse_token', crear 3 descuentos + categoría de paquetes, elegirlos en Programa, registrar webhook.
 6. Convenios (Estudiantes, GYM, OZON): reglas especiales después; por ahora mismas reglas. Quitar SHOW_GROUP_LINKS cuando haya QR impresos.
-7. Alta de la dueña real: insert into staff_invites (email, role 'owner'). Borrar cuentas de prueba al final.
+7. Dueña real: INVITACIÓN owner guardada 2026-10-26 para su correo (tabla staff_invites; verificado: sin otra cuenta ni rol). Falta que ELLA entre con código por correo y confirmar que ve el panel completo. Borrar cuentas de prueba al final.
 8. Drive (2.0 Sino Coffe › 05 Documentacion tecnica): Claude no tiene permiso de escribir (carpeta de Víctor); copia local al día en _drive/05, subirla a mano. Correos por Gmail SMTP llegan lento: considerar Resend.
 
 ## Decisiones (y por qué)
