@@ -49,6 +49,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 5. Cuenta REAL de Sano en Loyverse: token en Vault 'loyverse_token', crear 3 descuentos + categoría de paquetes, elegirlos en Programa, registrar webhook.
 6. Convenios (Estudiantes, GYM, OZON): reglas especiales después; por ahora mismas reglas. Quitar SHOW_GROUP_LINKS cuando haya QR impresos.
 7. Dueña real: INVITACIÓN owner guardada 2026-10-26 para su correo (tabla staff_invites; verificado: sin otra cuenta ni rol). Falta que ELLA entre con código por correo y confirmar que ve el panel completo. Borrar cuentas de prueba al final.
+   2026-10-27: Kevin pidió 3 admins más; agregadas invitaciones owner (staff_invites, SQL Editor desde el Chrome de Kevin, `on conflict do nothing`, verificado con select): emoncan27@gmail.com (aún sin cuenta), kevin.36137@gmail.com y victorcado29@gmail.com (estos dos YA tienen tarjeta de cliente: decisión de Kevin, la tarjeta no se borra y sigue sumando por Loyverse, pero con ese correo la app solo muestra el panel y no su tarjeta; ver app-context.tsx load()). Falta que entren y confirmar que ven /admin. Sin comprobar: si esas tarjetas cuentan en "Clientes registrados" del Resumen.
 8. Drive (2.0 Sino Coffe › 05 Documentacion tecnica): Claude no tiene permiso de escribir (carpeta de Víctor); copia local al día en _drive/05, subirla a mano. Correos por Gmail SMTP llegan lento: considerar Resend.
 
 ## Decisiones (y por qué)
