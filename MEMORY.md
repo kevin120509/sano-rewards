@@ -15,7 +15,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 - Diseño cliente "Sano" (beige/café, logo @sanobistro) igual para todos los grupos (themes.ts CUSTOMER_SKIN).
 
 ## Cuentas de prueba (contraseñas en CUENTAS-PRUEBA.local.txt, no subir)
-- kevin.36137+admin@gmail.com (dueña) · kevin.36137+caja@gmail.com (caja) · kevin.36137+cliente@gmail.com (cliente C-2891, entra con código por correo)
+- kevin.36137+admin@gmail.com (dueña) · kevin.36137+caja@gmail.com (caja) · (cuenta de cliente de prueba C-2891 BORRADA 2026-11-09; para probar como cliente registrar otra por QR)
 - Kevin real: C-8571. Víctor: C-4738 y C-3895 (no tocar).
 
 - 2026-10-13 prueba en vivo de las 3 pantallas (caja, admin, cliente). Arreglado y PUBLICADO 2026-10-13 (deploy DA35ey8i…; cliente verificado en vivo, admin no re-verificado):
@@ -39,6 +39,7 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
   _to_delete, _drive/07, docs/material-duena (audios privados). Repo creado (ver arriba).
   .claude/launch.json = server "sano-dev".
 - 2026-10-26: PRUEBA COMPLETA en Loyverse "Codia" con C-2891 (tickets 0016-0019), leída sola en <1 min y verificada en la ficha: 4 → sin sello (mínimo 5); 50 → sello + cupón cold foam (vence 30 días después: 21 oct → 20 nov); 2.ª compra del mismo día → sin sello; cupón aplicado en Loyverse → canjeado solo + sello. Anulación ya probada el 2026-10-13 (tickets 0003/0015). C-2891 quedó en 4/7 sellos, sin cupones.
+- 2026-11-09: LIMPIEZA de clientes en Supabase (sano_bistro): borrados C-2891 Paula Prueba, G-2966 Kevin vargas (GYM) y C-7417 Chatgpt DSM, con tarjeta y acceso, por decisión de Kevin. Quedan SOLO C-8571, C-4738 y C-3895 (verificado: 0 accesos/perfiles restantes, 0 sellos o cupones huérfanos). Los 17 tickets de C-2891 se conservaron en loyverse_receipts con customer_id null para que no se reprocesen. Conector Supabase reconectado a la organización CODIA_Cafateria (herramientas MCP disponibles al abrir sesión nueva).
 
 ## PENDIENTE (en orden)
 0. ✅ HECHO 2026-10-22: 016 aplicada y probada en vivo como caja (C-0000 y ZZ-1234 → nadie; c2891 y "Paula" → C-2891). T2 y T18 cerradas.
