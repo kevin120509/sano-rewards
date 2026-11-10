@@ -41,9 +41,9 @@ export function AppShell() {
  * Pantallas sin sesión (bienvenida, QR, login, datos).
  * En compu se parte en dos: contenido a la izquierda y vitrina (tarjeta de muestra) a la derecha.
  */
-export function Page({ children, back, showcase }: { children: React.ReactNode; back?: React.ReactNode; showcase?: React.ReactNode }) {
+export function Page({ children, back, showcase, className }: { children: React.ReactNode; back?: React.ReactNode; showcase?: React.ReactNode; className?: string }) {
   return (
-    <div className={`page ${showcase ? 'page--split' : ''}`}>
+    <div className={`page ${showcase ? 'page--split' : ''} ${className ?? ''}`}>
       <div className="page__main">
         {back}
         {children}

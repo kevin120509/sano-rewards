@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { BRAND } from '../config/brand';
 import { validityLabel } from '../domain/card';
 import type { ThemeKey } from '../domain/types';
@@ -27,7 +27,7 @@ export interface LoyaltyCardData {
  * panel claro con la marca y los datos + franja de color "Sano rewards" con las casillas.
  * Se acomoda sola: horizontal cuando hay espacio, vertical en teléfono (container queries).
  */
-export function LoyaltyCard({ data, theme, interactive = true }: { data: LoyaltyCardData; theme: ThemeKey; interactive?: boolean }) {
+export function LoyaltyCard({ data, theme, interactive = true, subtitle, finePrint, stampGoal }: { data: LoyaltyCardData; theme: ThemeKey; interactive?: boolean; subtitle?: ReactNode; finePrint?: string; stampGoal?: number }) {
   const ref = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -80,9 +80,9 @@ export function LoyaltyCard({ data, theme, interactive = true }: { data: Loyalty
 
         <section className="lcard__band">
           <h2 className="lcard__title">{BRAND.programName.split(' ')[0]} <span>{BRAND.programName.split(' ').slice(1).join(' ')}</span></h2>
-          <p className="lcard__sub">Registra tu visita y en la <b>{data.goal}.ª</b> recibe <b>{data.rewardName}</b></p>
-          <StampGrid visits={data.visits} goal={data.goal} theme={theme} rewardReady={data.rewardReady} dates={data.visitDates} fresh={data.freshStamps} />
-          <p className="lcard__fine">Vigencia: {validityLabel(data.periodEndsAt)} · {BRAND.finePrint}</p>
+          <p className="lcard__sub">{subtitle ?? <>Registra tu visita y en la <b>{data.goal}.ª</b> recibe <b>{data.rewardName}</b></>}</p>
+          <StampGrid visits={data.visits} goal={stampGoal ?? data.goal} theme={theme} rewardReady={data.rewardReady} dates={data.visitDates} fresh={data.freshStamps} />
+          <p className="lcard__fine">{finePrint ?? `Vigencia: ${validityLabel(data.periodEndsAt)} · ${BRAND.finePrint}`}</p>
         </section>
         <span className="lcard__sheen" aria-hidden="true" />
       </article>

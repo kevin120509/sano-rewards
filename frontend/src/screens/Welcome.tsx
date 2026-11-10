@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BrandMark, Page } from '../components/Layout';
-import { PreviewCard } from '../components/PreviewCard';
-import { Showcase } from '../components/Showcase';
+import { HomeCardPreview, HomeShowcase } from '../components/HomeShowcase';
 import { GROUP_LINKS, SHOW_GROUP_LINKS } from '../config/brand';
 import { useApp } from '../lib/app-context';
 
@@ -12,12 +11,12 @@ export function Welcome() {
   useEffect(() => setPreviewGroup(null), [setPreviewGroup]);
 
   return (
-    <Page showcase={<Showcase />}>
+    <Page className="welcome" showcase={<HomeShowcase />}>
       <div className="hero">
         <BrandMark />
         <h1 className="hero__title">Tu tarjeta <em>Cliente Consentido</em></h1>
         <p className="lede">Suma <b>una visita por día</b>. En tu <b>visita 8</b>, te consentimos con un premio.</p>
-        <div className="only-compact" aria-hidden="true"><PreviewCard /></div>
+        <div className="only-compact" aria-hidden="true"><HomeCardPreview /></div>
         <Link to="/entrar" className="btn btn--primary btn--block">Entrar a mi tarjeta</Link>
         <p className="muted center">¿Aún no tienes tarjeta? Escanea el QR que está en el local para crearla.</p>
 

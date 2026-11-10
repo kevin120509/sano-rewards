@@ -780,3 +780,26 @@ html[data-theme='sport'] .stamp__date { transform: translateX(-50%) skewX(8deg);
 .sp-row__main b { font-weight: 800; }
 .sp-visits li > span:first-child b, .sp-coupon__body b { font-weight: 800; }
 @media (min-width: 900px) { .sp-actions .btn { flex: 0 1 auto; } }
+
+/* Bienvenida verde de octubre: variables confinadas al wrapper, la piel global sigue en café. */
+.welcome {
+  --bg: #FFF9EE; --surface: #FFFFFF; --ink: #1F2A1C; --muted: #6B7466; --primary: #2F7A22;
+  --on-primary: #FFFFFF; --accent: #8DBF4F; --line: #E7E0CF; --radius: 22px;
+  --font-display: 'Fraunces', Georgia, serif; --font-body: 'Outfit', Arial, sans-serif;
+  --font-brand: 'Fraunces', Georgia, serif; --display-transform: none; --display-weight: 700;
+  --brown: #2F7A22; --brown-ink: #1E5A17; --leaf-strong: #46A834; --gold-pill: #FFF1A8;
+  max-width: none; min-height: 100dvh; padding: 1.25rem 1.25rem 3rem; background: var(--bg); color: var(--ink);
+}
+.welcome .hero__title { color: var(--ink); }
+.welcome .btn--primary { background: #2F7A22; color: #fff; }
+.home-showcase { width: min(620px, 100%); display: grid; gap: 1.2rem; text-align: center; }
+.home-showcase__eyebrow { color: #2F7A22; font-size: .85rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.home-showcase__title { color: #1F2A1C; font: 700 clamp(1.8rem, 3vw, 2.4rem)/1.05 'Fraunces', Georgia, serif; }
+.home-showcase__note { color: #53614E; }
+.home-card-preview { width: 100%; max-width: 620px; margin: 0 auto; }
+.home-card-preview .lcard { transform: none; }
+@media (min-width: 1024px) {
+  .welcome.page--split { grid-template-columns: minmax(420px, .85fr) minmax(0, 1.15fr); }
+  .welcome.page--split .page__main { padding: 3rem clamp(2rem, 5vw, 5.5rem); }
+  .welcome .page__showcase { background: radial-gradient(circle at 75% 15%, rgb(141 191 79 / .3), transparent 50%), linear-gradient(155deg, #F5F8E9, #E3F0D8); }
+}
