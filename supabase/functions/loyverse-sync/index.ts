@@ -38,6 +38,26 @@ Deno.serve(async (req) => {
   if (!cfg?.token) return json({ error: "sin_token" }, 500);
 
   const params = new URL(req.url).searchParams;
+
+  // Sincronizar clientes nuevos hacia Loyverse (solo con ?clientes=1; el cron normal aún no lo dispara).
+  // Crea en Loyverse un cliente mínimo (nombre + customer_code = prefijo-número) y guarda aquí el id devuelto.
+  let customers: Record<string, unknown> | null = null;
+  if (params.has("clientes")) {
+    const pend = (await sb.rpc("loyverse_customers_pending", { p_secret: secret, p_limit: 20 }))
+      .data as { id: string; code: string; name: string }[] | null;
+    const pairs: { customer_id: string; loyverse_id: string }[] = [];
+    for (const c of pend ?? []) {
+      const res = await fetch("https://api.loyverse.com/v1.0/customers", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${cfg.token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ name: c.name, customer_code: c.code }),
+      });
+      if (res.ok) { const d = await res.json(); if (d?.id) pairs.push({ customer_id: c.id, loyverse_id: d.id as string }); }
+    }
+    const marked = pairs.length ? (await sb.rpc("loyverse_customers_mark", { p_secret: secret, p_pairs: pairs })).data : 0;
+    customers = { pendientes: pend?.length ?? 0, creados: pairs.length, marcados: marked };
+  }
+
   let catalog: Record<string, unknown> | null = null;
   if (new Date().getUTCMinutes() % 5 === 0 || params.has("catalogo") || params.has("descuentos")) {
     catalog = {};
@@ -61,10 +81,10 @@ Deno.serve(async (req) => {
 
   const receipts = await fetchAll(cfg.token, "receipts", "receipts", { updated_at_min: since });
   if (!receipts) return json({ error: "loyverse_receipts" }, 502);
-  if (!receipts.length) return json({ ok: true, since, count: 0, catalog });
+  if (!receipts.length) return json({ ok: true, since, count: 0, catalog, customers });
 
   const { data, error: e2 } = await sb.rpc("loyverse_sync_ingest", { p_secret: secret, p_payload: { receipts } });
   if (e2) return json({ error: "ingest", detail: e2.message }, 500);
   console.log("sync", since, JSON.stringify(data));
-  return json({ ok: true, since, count: receipts.length, results: data, catalog });
+  return json({ ok: true, since, count: receipts.length, results: data, catalog, customers });
 });
