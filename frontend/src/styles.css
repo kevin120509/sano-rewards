@@ -686,6 +686,7 @@ html[data-theme='sport'] .stamp__date { transform: translateX(-50%) skewX(8deg);
 @media (min-width: 640px) { .codesheet { place-items: center; } }
 .codesheet__box { width: min(440px, 100%); background: var(--surface); color: #3A271B; border-radius: 30px; padding: 1.8rem 1.4rem 1.3rem; display: grid; gap: .55rem; justify-items: center; text-align: center; animation: sheet-up .28s cubic-bezier(.2, 1.2, .4, 1); }
 .codesheet__stamps { display: inline-flex; align-items: center; gap: .6rem; font-size: 1.15rem; margin: 0 0 .6rem; }
+.codesheet__qr { width: 200px; height: 200px; background: #fff; border-radius: 18px; padding: 10px; box-shadow: 0 2px 10px rgba(30, 22, 16, .12); }
 .codesheet__label { margin: 0; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .codesheet__code { margin: 0; font-family: var(--font-display); font-weight: 900; font-size: clamp(3rem, 16vw, 4.2rem); letter-spacing: .04em; line-height: 1; color: var(--brown); background: #fff; border-radius: 22px; padding: 1rem 1.4rem; width: 100%; }
 .codesheet__hint { margin: .2rem 0 .4rem; color: var(--muted); font-size: .92rem; }

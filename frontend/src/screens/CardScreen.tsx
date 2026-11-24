@@ -7,6 +7,7 @@ import { firstName, formatLongDate, formatTime } from '../domain/card';
 import { COUPON_INFO, couponBadge, couponState, DEFAULT_RULES, fmtLocalDate, lastValidDay } from '../domain/coupons';
 import type { CardView, Coupon, CouponKind, RewardReady } from '../domain/types';
 import { useApp } from '../lib/app-context';
+import { qrDataUrl } from '../lib/qr-poster';
 import { loadSeen, saveSeen } from '../lib/seen';
 
 const POLL_MS = 20_000;      // mientras la tarjeta está abierta, revisa si ya se registró la compra
@@ -170,20 +171,27 @@ function Promotions({ card }: { card: CardView }) {
 /** "Mostrar mi código": código grande + datos para que el mesero lo escriba en la nota de Loyverse. */
 function CodeSheet({ card, onClose }: { card: CardView; onClose(): void }) {
   const btn = useRef<HTMLButtonElement>(null);
+  const [qr, setQr] = useState<string | null>(null);
   useEffect(() => {
     btn.current?.focus();
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', esc);
     return () => window.removeEventListener('keydown', esc);
   }, [onClose]);
+  useEffect(() => {
+    let ok = true;
+    qrDataUrl(card.code, 240).then((u) => { if (ok) setQr(u); }).catch(() => { if (ok) setQr(null); });
+    return () => { ok = false; };
+  }, [card.code]);
   const complete = card.journey_status === 'complete';
   return (
     <div className="codesheet" role="dialog" aria-modal="true" aria-labelledby="codesheet-code" onClick={onClose}>
       <div className="codesheet__box" onClick={(e) => e.stopPropagation()}>
         <p className="codesheet__stamps"><Cup size={30} /> {complete ? 'Tarjeta completa · bebida gratis' : `${card.visits_count} de ${card.visits_goal} sellos`}</p>
+        {qr && <img className="codesheet__qr" src={qr} alt={`Código QR ${card.code}`} width={200} height={200} />}
         <p className="codesheet__label">Tu código</p>
         <p id="codesheet-code" className="codesheet__code">{card.code}</p>
-        <p className="codesheet__hint">Díctalo al mesero al pagar para que se registre tu sello.</p>
+        <p className="codesheet__hint">Muéstralo para que lo escaneen, o díctalo al mesero al pagar.</p>
         <dl className="codesheet__data">
           <dd>{card.full_name}</dd>
           {card.phone && <dd>{card.phone.replace(/^\+52/, '').replace(/(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3')}</dd>}

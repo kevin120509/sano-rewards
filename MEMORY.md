@@ -55,7 +55,16 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
   paso en la función tras ?clientes=1 que crea el cliente en Loyverse (name+customer_code) y guarda el id. PROBADO contra Codia:
   3 clientes creados con customer_code exacto, mapeo guardado, LUEGO borrados de Codia y loyverse_customer_id vuelto a null para
   que con el token real se sincronicen a Sano. El cron automático NO dispara ?clientes=1 todavía (a propósito, para no sincronizar
-  con el token de prueba). FALTA: Fase 3 process_receipt híbrido (usar customer_id y si no, la nota) y Fase 4 QR en "Mostrar mi código".
+  con el token de prueba).
+  HECHO Fase 3 (mig 019): find_customer_in_receipt ahora es híbrida: 1) usa raw.customer_id cruzado con customers.loyverse_customer_id
+  (cliente escaneado por QR); 2) si no, el código en la nota/renglón (como antes). Probado aislado: customer_id→cliente correcto,
+  nota→correcto, customer_id inválido con nota→usa nota, customer_id inválido sin nota→null. (Escanear y cancelar NO da sello:
+  process_receipt revierte el ticket cancelado antes de identificar.)
+  HECHO Fase 4 (CardScreen.tsx CodeSheet + styles.css): "Mostrar mi código" ahora muestra el QR del código (= card.code, p.ej. C-5785)
+  con el helper qrDataUrl (librería qrcode, misma que el cartel). Texto: "Muéstralo para que lo escaneen, o díctalo al mesero".
+  typecheck 0, 18/18 tests, build OK. Visual en vivo del QR dentro de la tarjeta: no capturado (requiere login de un cliente que no
+  debo usar); el QR usa el mismo helper ya probado del cartel. Commits locales sin subir. FALTA solo lo que necesita el token/cuenta
+  real: descuentos+categoría, webhook, encender ?clientes=1 en el cron (una línea), y sincronizar clientes existentes.
 
 ## PENDIENTE (en orden)
 0. ✅ HECHO 2026-10-22: 016 aplicada y probada en vivo como caja (C-0000 y ZZ-1234 → nadie; c2891 y "Paula" → C-2891). T2 y T18 cerradas.
