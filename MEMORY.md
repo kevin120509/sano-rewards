@@ -13,11 +13,15 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 - Panel por rol (spec 003): /admin (Resumen, Clientes, Grupos, Programa) y /mostrador. Rol lo decide la BD (my_role).
   2026-10-13: menú del personal ahora VERTICAL a la izquierda (≥900px) y pestañas abajo en teléfono (StaffShell.tsx, styles.css). Resumen y Programa reordenados por secciones. Menú lateral ya publicado y revisado en pantalla (Kevin lo subió). Ficha del cliente con secciones y negritas, y barra superior móvil que se envuelve: hechos en código el 2026-10-13, con librería `motion` (components/motion.tsx: CountUp, Rise; pastilla animada del menú y transición entre pantallas, respetan reduced-motion). PUBLICADO 2026-10-13 (deploy EZdMuYEb…). Claude publica con run_in_terminal + frontend/Publicar-en-Vercel.bat en la terminal del usuario; por Bash/PowerShell el clasificador bloquea vercel deploy --prod.
 - Diseño cliente "Sano" (beige/café, logo @sanobistro) igual para todos los grupos (themes.ts CUSTOMER_SKIN).
-- 2026-11-26: QR del cliente PUBLICADO en vivo (deploy sano-rewards-real-2jijpu8cw; bundle verificado: codesheet__qr,
-  escaneen, "Mostrar código y QR"). El botón de la tarjeta ahora dice "Mostrar código y QR". OJO AL PUBLICAR:
-  el deploy va SIEMPRE desde la carpeta `frontend/` (ahí está el .vercel correcto → sano-rewards-real y Publicar-en-Vercel.bat).
-  Desde la RAÍZ NO: `vercel --prod` en la raíz crea un proyecto basura "tarjetas-lealtad" (ya borrado). Los pushes a
-  GitHub NO despliegan solos; hay que publicar a mano. GitHub al día (commit 0bbee6d).
+- 2026-11-26: QR del cliente PUBLICADO y VERIFICADO en vivo con cuenta E-1567 (QR + código E-1567 en la hoja
+  "Mostrar código y QR"; el botón de la tarjeta ahora dice "Mostrar código y QR"). GitHub al día (commit 0bbee6d).
+  CÓMO PUBLICAR (OBLIGATORIO, o el sitio sale EN BLANCO): desde `frontend/`, y SIEMPRE pasando las variables de
+  Supabase con --build-env, porque el proyecto de Vercel NO las tiene configuradas y `.vercelignore` excluye el
+  .env.local. Usar frontend/Publicar-en-Vercel.bat, o el comando que trae:
+  `vercel deploy --prod --yes --build-env VITE_SUPABASE_URL=... --build-env VITE_SUPABASE_PUBLISHABLE_KEY=...`
+  Un `vercel --prod` pelón (sin --build-env) compila sin Supabase → app en blanco (me pasó este día; se arregló
+  re-desplegando con los --build-env). Desde la RAÍZ tampoco: crea proyecto basura "tarjetas-lealtad". Los pushes a
+  GitHub NO despliegan solos.
 
 ## Cuentas de prueba (contraseñas en CUENTAS-PRUEBA.local.txt, no subir)
 - kevin.36137+admin@gmail.com (dueña) · kevin.36137+caja@gmail.com (caja) · (cuenta de cliente de prueba C-2891 BORRADA 2026-11-09; para probar como cliente registrar otra por QR)
