@@ -76,7 +76,7 @@ export function CardScreen() {
                        dates={card.card_visits} fresh={fresh} subtitle={subtitle}
                        title={complete ? '¡Tu bebida va por nosotros!' : undefined} />
           <button type="button" className="sano__codebtn" onClick={() => setShowCode(true)}>
-            <CodeIcon /> Mostrar mi código
+            <CodeIcon /> Mostrar código y QR
           </button>
         </div>
 
