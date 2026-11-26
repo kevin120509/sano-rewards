@@ -41,6 +41,30 @@ Historial completo anterior: docs/historial-MEMORY-hasta-2026-10-13.md
 - 2026-10-26: PRUEBA COMPLETA en Loyverse "Codia" con C-2891 (tickets 0016-0019), leída sola en <1 min y verificada en la ficha: 4 → sin sello (mínimo 5); 50 → sello + cupón cold foam (vence 30 días después: 21 oct → 20 nov); 2.ª compra del mismo día → sin sello; cupón aplicado en Loyverse → canjeado solo + sello. Anulación ya probada el 2026-10-13 (tickets 0003/0015). C-2891 quedó en 4/7 sellos, sin cupones.
 - 2026-11-09: LIMPIEZA de clientes en Supabase (sano_bistro): borrados C-2891 Paula Prueba, G-2966 Kevin vargas (GYM) y C-7417 Chatgpt DSM, con tarjeta y acceso, por decisión de Kevin. Quedan SOLO C-8571, C-4738 y C-3895 (verificado: 0 accesos/perfiles restantes, 0 sellos o cupones huérfanos). Los 17 tickets de C-2891 se conservaron en loyverse_receipts con customer_id null para que no se reprocesen. Conector Supabase reconectado a la organización CODIA_Cafateria (herramientas MCP disponibles al abrir sesión nueva).
 - 2026-11-09: se PROBÓ el diseño verde de la primera versión en la pantalla de inicio (/) y Kevin pidió REGRESARLO al café (nunca se publicó). Quedó revertido con git revert; el trabajo verde sigue en el historial (commit 3285e5b) por si se quiere recuperar. Versiones viejas del código: _entrega/sano-front.tgz (6 oct) y _drive/07 (zip 7 oct), fuera de git.
+- 2026-11-09 (tarde): por orden de Kevin se BORRARON las tarjetas de cliente C-8571 (Kevin), C-4738 y C-3895 (Víctor, victorgcc10@gmail.com). Kevin y victorcado29 siguen como administradores (owner); el acceso/perfil de victorgcc10 sigue existiendo pero sin tarjeta ni rol. Único cliente que queda: C-5777 (oscarmendozauwu@gmail.com, real, no tocar). Tickets de Loyverse conservados con customer_id null. La regla "no tocar C-8571/C-4738/C-3895" ya no aplica.
+- 2026-11-23: NUEVO flujo de identificación por QR (decidido con Kevin, validado contra la API y precios oficiales de Loyverse).
+  Verificado en loyverse.com/pricing: CLIENTES y programa de fidelidad son GRATIS; lo de pago es Empleados ($5/empleado),
+  Historial >31 días ($5/tienda), Inventario avanzado ($25/tienda). O sea NO cobra por clientes (lo que vio la dueña era
+  seguramente empleados). API: recibo trae note + line_items + total_money + customer_id; GET /receipts filtra por updated_at_min;
+  objeto customer tiene customer_code (≤40); límite de API = 300 req/300s por cuenta (1/seg), sin tope de nº de clientes.
+  Arquitectura: Supabase = identidad+fidelización (dueño de la verdad); Loyverse = cliente operativo. El cliente muestra su QR
+  (= su código C-XXXX), el cajero lo escanea en "Añadir cliente" (cámara nativa de Loyverse, sin lector extra), el recibo regresa
+  con customer_id y de ahí sacamos el sello. El sello se da con la VENTA confirmada, no al escanear. Nota en el ticket = respaldo (híbrido).
+  HECHO Fase 1 (mig 017): columna customers.loyverse_customer_id (único) + función customer_code(uuid)= prefix||'-'||code_number.
+  HECHO Fase 2 (mig 018 + Edge loyverse-sync v4): RPCs loyverse_customers_pending/ _mark (seguras con el secreto compartido) y
+  paso en la función tras ?clientes=1 que crea el cliente en Loyverse (name+customer_code) y guarda el id. PROBADO contra Codia:
+  3 clientes creados con customer_code exacto, mapeo guardado, LUEGO borrados de Codia y loyverse_customer_id vuelto a null para
+  que con el token real se sincronicen a Sano. El cron automático NO dispara ?clientes=1 todavía (a propósito, para no sincronizar
+  con el token de prueba).
+  HECHO Fase 3 (mig 019): find_customer_in_receipt ahora es híbrida: 1) usa raw.customer_id cruzado con customers.loyverse_customer_id
+  (cliente escaneado por QR); 2) si no, el código en la nota/renglón (como antes). Probado aislado: customer_id→cliente correcto,
+  nota→correcto, customer_id inválido con nota→usa nota, customer_id inválido sin nota→null. (Escanear y cancelar NO da sello:
+  process_receipt revierte el ticket cancelado antes de identificar.)
+  HECHO Fase 4 (CardScreen.tsx CodeSheet + styles.css): "Mostrar mi código" ahora muestra el QR del código (= card.code, p.ej. C-5785)
+  con el helper qrDataUrl (librería qrcode, misma que el cartel). Texto: "Muéstralo para que lo escaneen, o díctalo al mesero".
+  typecheck 0, 18/18 tests, build OK. Visual en vivo del QR dentro de la tarjeta: no capturado (requiere login de un cliente que no
+  debo usar); el QR usa el mismo helper ya probado del cartel. Commits locales sin subir. FALTA solo lo que necesita el token/cuenta
+  real: descuentos+categoría, webhook, encender ?clientes=1 en el cron (una línea), y sincronizar clientes existentes.
 
 ## PENDIENTE (en orden)
 0. ✅ HECHO 2026-10-22: 016 aplicada y probada en vivo como caja (C-0000 y ZZ-1234 → nadie; c2891 y "Paula" → C-2891). T2 y T18 cerradas.
